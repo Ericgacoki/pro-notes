@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "447967702556",
+    "firebase_url": "https://pro-note-ab02c.firebaseio.com",
+    "project_id": "pro-note-ab02c",
+    "storage_bucket": "pro-note-ab02c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447967702556:android:0dbe330bde13cc8a95f9d9",
+        "android_client_info": {
+          "package_name": "com.ericg.pronotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447967702556-5rrdu0qe4o4215s67nce0jupnc7p1oi2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlmijfYlSnkIgREPgh6AZ9EvTyKBT2bn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447967702556-5rrdu0qe4o4215s67nce0jupnc7p1oi2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
