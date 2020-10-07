@@ -7,4 +7,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppMaterialTheme" parent="Theme.MaterialComponents.Light.DarkActionBar" >
+        <item name="colorPrimaryDark" >@color/colorOrange</item>
+        <item name="colorPrimary">@color/colorOrange</item>
+        <item name="colorAccent">@color/colorDarkOrange</item>
+    </style>
+
+    <style name="ThemeFullScreen" parent="Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

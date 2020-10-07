@@ -23,6 +23,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions{
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    kotlinOptions{
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -35,8 +44,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    // Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
+
+    // Proto DataStore
+    implementation "androidx.datastore:datastore-core:1.0.0-alpha01"
+    
     // folding cell layout
-    'com.ramotion.foldingcell:folding-cell:1.2.3'
+    implementation 'com.ramotion.foldingcell:folding-cell:1.2.3'
 
     // Viewpager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
@@ -71,5 +86,4 @@ dependencies {
 
     // gif ImageView
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
-
 }

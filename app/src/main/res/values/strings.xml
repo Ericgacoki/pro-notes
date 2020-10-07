@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Pro Notes</string>
+    <string name="onboard1_text">Never want to forget it ? Relax, <b>Pro Notes</b> got you covered. \n</string>
+    <string name="text_onboard2">Create Notes or schedules and enjoy fast <b>synchronization</b> to all signed in devices \n</string>
+    <string name="text_onboard3">Talking about updates, <b>Pro Notes</b> sends you realtime notifications to keep you updated all the time \n</string>
+    <string name="finish">Finish</string>
+    <string name="save">Save</string>
+    <string name="note_body">Note body</string>
+    <string name="title">Title</string>
+    <string name="create_a_new_note">Create a new Note</string>
+    <string name="create_new_todo">Create new Todo</string>
+    <string name="todo_body">Todo body</string>
 </resources>
