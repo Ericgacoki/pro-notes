@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @author eric
  * @date 10/2/20
  */
+
 class HomeViewPagerAdapter (
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,

@@ -19,30 +19,27 @@ class PrefsDataStoreBooleans(context: Context) {
         val SHOW_ONBOARD_SCREEN_KEY = preferencesKey<Boolean>("SHOW_ONBOARD_SCREEN")
     }
 
-    suspend fun setDataStorePrefs(type: String, value: Boolean) {
-        if (type == "autoSignIn") {
+    suspend fun setPrefsBoolean(type: PrefsBoolean, value: Boolean) {
+        if (type == PrefsBoolean.AUTO_SIGN_IN) {
             prefsDataStore.edit {
                 it[AUTO_SIGN_IN_KEY] = value
             }
             return
         }
 
-        if (type == "showOnBoardScreen") {
+        if (type == PrefsBoolean.SHOW_ONBOARD_SCREEN) {
             prefsDataStore.edit {
                 it[SHOW_ONBOARD_SCREEN_KEY] = value
             }
             return
         }
     }
-/*
-    var autoSignIn by Delegates.notNull<Boolean>()
-    var showOnBoard by Delegates.notNull<Boolean>()*/
 
     val autoSignInFlow = this.prefsDataStore.data.map {
         it[AUTO_SIGN_IN_KEY] ?: false
     }
 
-    val showOnBoardFlow = prefsDataStore.data.map {
-       it[SHOW_ONBOARD_SCREEN_KEY] ?: true
+    val showOnBoardFlow = this.prefsDataStore.data.map {
+        it[SHOW_ONBOARD_SCREEN_KEY] ?: true
     }
 }
