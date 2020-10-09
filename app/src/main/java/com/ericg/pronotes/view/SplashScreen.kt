@@ -1,18 +1,18 @@
 package com.ericg.pronotes.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import com.ericg.pronotes.R
 import com.ericg.pronotes.model.PrefsDataStoreBooleans
 import kotlinx.android.synthetic.main.splash_screen_fragment.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 /**
  * @author eric
@@ -21,43 +21,62 @@ import kotlinx.coroutines.launch
 @Suppress("DEPRECATION")
 
 class SplashScreen : Fragment() {
-    lateinit var prefs: PrefsDataStoreBooleans
+    private var autoSignIn by Delegates.notNull<Boolean>()
+    private var showOnBoardScreen by Delegates.notNull<Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        prefs = PrefsDataStoreBooleans(this@SplashScreen.requireContext())
-        val autoSignIn = prefs.autoSignInFlow
-        val showOnBoardScreen = prefs.showOnBoardFlow
+        val prefs = PrefsDataStoreBooleans(requireContext())
+        val autoSignInLiveData = prefs.autoSignInFlow.asLiveData()
+        val showOnBoardScreenLiveData = prefs.showOnBoardFlow.asLiveData()
 
-     /*  fun goto(): String {
-            return if (autoSignIn && !showOnBoardScreen) {
-                "home viewpager"
-            } else if (!autoSignIn && showOnBoardScreen) {
-                "goto onboard screen"
-            } else if (!autoSignIn && !showOnBoardScreen) {
-                "goto sign in"
-            } else "show onboard"
+        autoSignInLiveData.observe(viewLifecycleOwner, {
+            autoSignIn = it
+        })
+
+        showOnBoardScreenLiveData.observe(viewLifecycleOwner, {
+            showOnBoardScreen = it
+        })
+
+        fun drawable(drawable: Int) = ContextCompat.getDrawable(requireContext(), drawable)
+        val images = arrayOf(
+            drawable(R.drawable.cloud),
+            drawable(R.drawable.notification),
+            drawable(R.drawable.multi_device)
+        )
+        val randomIndex = (0..2).random()
+
+        val slogan: String = when (randomIndex) {
+            0 -> "Take advantage of cloud storage !"
+            1 -> "It has never been this great before !"
+            else -> "Write in one, read in many !"
         }
-*/
+
+        fun goto() {
+            return if (autoSignIn && !showOnBoardScreen) {
+                findNavController().navigate(R.id.from_splashScreen_to_homeViewPager)
+
+            } else if (!autoSignIn && showOnBoardScreen) {
+                findNavController().navigate(R.id.from_splashScreen_to_onBoardViewPager)
+
+            } else if (!autoSignIn && !showOnBoardScreen) {
+                findNavController().navigate(R.id.from_splashScreen_to_signInUser)
+
+            } else
+                findNavController().navigate(R.id.from_splashScreen_to_onBoardViewPager)
+        }
+
         return inflater.inflate(R.layout.splash_screen_fragment, container, false).apply {
 
-            splashScreenText.setOnClickListener {
-                findNavController().navigate(R.id.from_splashScreen_to_onBoardViewPager)
-            }
+            this.splashScreenImage.setImageDrawable(images[randomIndex])
+            this.splashScreenText.text = slogan
+
+            Handler().postDelayed({
+                goto()
+            }, 3000)
         }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().actionBar?.hide()
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDetach() {
-      requireActivity().actionBar?.show()
-        super.onDetach()
-    }
-
 }
