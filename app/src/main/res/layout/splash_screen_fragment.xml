@@ -6,17 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".view.SplashScreen">
 
+    <ImageView
+        android:id="@+id/splashScreenImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/multi_device"
+        app:layout_constraintBottom_toTopOf="@+id/splashScreenText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/splashScreenText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Splash screen"
+        android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
+        tools:text="Random text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,17 +8,12 @@
     <fragment
         android:id="@+id/splashScreen"
         android:name="com.ericg.pronotes.view.SplashScreen"
-        tools:layout="@layout/splash_screen_fragment"
-        android:label="SplashScreen">
+        android:label="Hey There"
+        tools:layout="@layout/splash_screen_fragment">
         <action
             android:id="@+id/from_splashScreen_to_onBoardViewPager"
             app:destination="@id/onBoardViewPager"
             app:launchSingleTop="false"
-            app:popUpTo="@id/splashScreen"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/from_splashScreen_to_createAccount"
-            app:destination="@id/createAccount"
             app:popUpTo="@id/splashScreen"
             app:popUpToInclusive="true" />
         <action
@@ -34,50 +29,32 @@
     </fragment>
 
     <fragment
-        tools:layout="@layout/create_account_fragment"
-        android:id="@+id/createAccount"
-        android:name="com.ericg.pronotes.firebase.CreateAccount"
-        android:label="CreateAccount">
-        <action
-            android:id="@+id/from_createAccount_to_homeViewPager"
-            app:destination="@id/homeViewPager"
-            app:popUpTo="@id/createAccount"
-            app:popUpToInclusive="true" />
-    </fragment>
-
-    <fragment
-        tools:layout="@layout/onboard_view_pager2_fragment"
         android:id="@+id/onBoardViewPager"
         android:name="com.ericg.pronotes.view.OnBoardViewPager"
-        android:label="OnBoardViewPager">
+        android:label="Welcome to Pro Notes"
+        tools:layout="@layout/onboard_view_pager2_fragment">
         <action
-            android:id="@+id/from_onBoardViewPager_to_createAccount"
-            app:destination="@id/createAccount"
+            android:id="@+id/from_onBoardViewPager_to_signInUser"
+            app:destination="@id/signInUser"
+            app:popUpTo="@id/onBoardViewPager"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/from_onBoardViewPager_to_homeViewPager"
+            app:destination="@id/homeViewPager"
+            app:popUpTo="@id/onBoardViewPager"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onBoardViewPager_to_homeViewPager2"
+            app:destination="@id/homeViewPager"
             app:popUpTo="@id/onBoardViewPager"
             app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-        tools:layout="@layout/reset_password_fragment"
-        android:id="@+id/resetPassword"
-        android:name="com.ericg.pronotes.firebase.ResetPassword"
-        android:label="ResetPassword" >
-        <action
-            android:id="@+id/from_resetPassword_to_createAccount"
-            app:destination="@id/createAccount" />
-    </fragment>
-
-    <fragment
-        tools:layout="@layout/sign_in_fragment"
         android:id="@+id/signInUser"
         android:name="com.ericg.pronotes.firebase.SignInUser"
-        android:label="SignInUser">
-        <action
-            android:id="@+id/from_signInUser_to_createAccount"
-            app:destination="@id/createAccount" />
-        <action
-            android:id="@+id/from_signInUser_to_resetPassword"
-            app:destination="@id/resetPassword" />
+        android:label="Sign In"
+        tools:layout="@layout/sign_in_fragment">
         <action
             android:id="@+id/from_signInUser_to_homeViewPager"
             app:destination="@id/homeViewPager"
@@ -86,14 +63,8 @@
     </fragment>
 
     <fragment
-        tools:layout="@layout/home_view_pager2"
         android:id="@+id/homeViewPager"
         android:name="com.ericg.pronotes.view.HomeViewPager"
-        android:label="HomeViewPager">
-        <action
-            android:id="@+id/from_homeViewPager_to_signInUser"
-            app:destination="@id/signInUser"
-            app:popUpTo="@id/homeViewPager"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:label="Home"
+        tools:layout="@layout/home_view_pager2"/>
 </navigation>

@@ -45,6 +45,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:visibility="visible"
         android:id="@+id/extraProNoteContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
