@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 object Utils {
     val userDatabase: FirebaseFirestore? = FirebaseFirestore.getInstance()
-    val mAuth: FirebaseAuth? = FirebaseAuth.getInstance()
-    val mUser: FirebaseUser? = mAuth?.currentUser
-    val userUID: String? = mUser?.uid
+    val firebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
+    val firebaseUser: FirebaseUser? = firebaseAuth?.currentUser
+    val userUID: String? = firebaseUser?.uid
 }

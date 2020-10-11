@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.ericg.pronotes.view.SplashScreen"
+        android:label="Hey There"
+        tools:layout="@layout/splash_screen_fragment">
+        <action
+            android:id="@+id/from_splashScreen_to_onBoardViewPager"
+            app:destination="@id/onBoardViewPager"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/from_splashScreen_to_signInUser"
+            app:destination="@id/signInUser"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/from_splashScreen_to_homeViewPager"
+            app:destination="@id/homeViewPager"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onBoardViewPager"
+        android:name="com.ericg.pronotes.view.OnBoardViewPager"
+        android:label="Welcome to Pro Notes"
+        tools:layout="@layout/onboard_view_pager2_fragment">
+        <action
+            android:id="@+id/from_onBoardViewPager_to_signInUser"
+            app:destination="@id/signInUser"
+            app:popUpTo="@id/onBoardViewPager"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/from_onBoardViewPager_to_homeViewPager"
+            app:destination="@id/homeViewPager"
+            app:popUpTo="@id/onBoardViewPager"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onBoardViewPager_to_homeViewPager2"
+            app:destination="@id/homeViewPager"
+            app:popUpTo="@id/onBoardViewPager"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <activity
+        android:id="@+id/signInUser"
+        android:name="com.ericg.pronotes.firebase.SignInWithGoogle"
+        android:label="Sign In"
+        tools:layout="@layout/activity_sign_in">
+    </activity>
+
+    <fragment
+        android:id="@+id/homeViewPager"
+        android:name="com.ericg.pronotes.view.HomeViewPager"
+        android:label="Home"
+        tools:layout="@layout/home_view_pager2"/>
+</navigation>
