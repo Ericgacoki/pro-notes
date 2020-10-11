@@ -1,6 +1,6 @@
 package com.ericg.pronotes.model
 
-import com.ericg.pronotes.firebase.Utils.mUser
+import com.ericg.pronotes.firebase.Utils.firebaseUser
 import com.ericg.pronotes.firebase.Utils.userDatabase
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
@@ -10,12 +10,13 @@ import com.google.firebase.firestore.QuerySnapshot
  * @date 10/2/20
  */
 
-class GetData(private val type: String) {
+class GetData(private val type: DataType) {
     fun getData(): Task<QuerySnapshot>? {
-        return if (type == "proNote") {
-            userDatabase?.collection("users/${mUser?.uid}/proNotes")?.orderBy("timeStamp")?.get()
+        return if (type == DataType.PRO_NOTE) {
+            userDatabase?.collection("users/${firebaseUser?.uid}/proNotes")?.orderBy("timeStamp")
+                ?.get()
         } else {
-            userDatabase?.collection("users/${mUser?.uid}/todo")?.orderBy("timeStamp")?.get()
+            userDatabase?.collection("users/${firebaseUser?.uid}/todo")?.orderBy("timeStamp")?.get()
         }
     }
 }
