@@ -50,9 +50,9 @@ class SplashScreen : Fragment() {
         val randomIndex = (0..2).random()
 
         val slogan: String = when (randomIndex) {
-            0 -> "Take advantage of cloud storage !"
-            1 -> "It has never been this great before !"
-            else -> "Write in one, read in many !"
+            0 -> "Take advantage of cloud storage"
+            1 -> "It has never been this great before"
+            else -> "Write in one, read in many"
         }
 
         fun goto() {
@@ -64,7 +64,7 @@ class SplashScreen : Fragment() {
 
             } else if (!autoSignIn && !showOnBoardScreen) {
                 findNavController().navigate(R.id.from_splashScreen_to_signInUser)
-
+                requireActivity().finish()
             } else
                 findNavController().navigate(R.id.from_splashScreen_to_onBoardViewPager)
         }

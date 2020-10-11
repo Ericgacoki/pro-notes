@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.ericg.pronotes.R
-import com.ericg.pronotes.extentions.Extensions.toast
-import com.ericg.pronotes.model.PrefsBoolean
+import com.ericg.pronotes.model.PrefsBooleanType
 import com.ericg.pronotes.model.PrefsDataStoreBooleans
 import kotlinx.android.synthetic.main.onboard3_fragment.view.*
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +41,7 @@ class OnBoard3 : Fragment() {
             btn_finish_onboard.setOnClickListener {
                 GlobalScope.launch(Dispatchers.IO) {
                     PrefsDataStoreBooleans(requireContext()).setPrefsBoolean(
-                        PrefsBoolean.SHOW_ONBOARD_SCREEN, false
+                        PrefsBooleanType.SHOW_ONBOARD_SCREEN, false
                     )
                 }
 
@@ -55,6 +53,7 @@ class OnBoard3 : Fragment() {
 
                 if (!autoSignIn) {
                     findNavController().navigate(R.id.from_onBoardViewPager_to_signInUser)
+                    requireActivity().finish()
                 } else {
                     findNavController().navigate(R.id.from_onBoardViewPager_to_homeViewPager)
                 }
