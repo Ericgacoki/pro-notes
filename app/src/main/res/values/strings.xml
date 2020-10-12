@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Pro Notes</string>
     <string name="onboard1_text">Never want to forget it ? Relax, <b>Pro Notes</b> got you covered. \n</string>
     <string name="text_onboard2">Create Notes or schedules and enjoy fast <b>synchronization</b> to all signed in devices \n</string>
@@ -12,10 +12,10 @@
     <string name="todo_body">Todo body</string>
     <string name="sign_in_with_google">Sign in with Google</string>
 
-    <!-- same value but different names. (recommended by Google)! -->
+    <!-- same value but different names. (recommended by Google)! NB: please ignore the character suggestion below -->
 
-    <string name="OAuth_WebType_client_ID">447967702556-j980does4nsu7gbc4d886d4ksmjii7d1.apps.googleusercontent.com</string>
-    <string name="OAuth_AndroidType_client_ID">447967702556-j980does4nsu7gbc4d886d4ksmjii7d1.apps.googleusercontent.com</string>
+    <string name="OAuth_WebType_client_ID" tools:ignore="TypographyDashes">447967702556-5rrdu0qe4o4215s67nce0jupnc7p1oi2.apps.googleusercontent.com</string>
+    <string name="OAuth_AndroidType_client_ID">447967702556-5rrdu0qe4o4215s67nce0jupnc7p1oi2.apps.googleusercontent.com</string>
     <string name="please_sign_in_to_proceed">Please sign in to proceed</string>
     <string name="welcome_to_pro_notes">Welcome to Pro Notes</string>
 </resources>
