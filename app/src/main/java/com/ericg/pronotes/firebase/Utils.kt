@@ -14,4 +14,8 @@ object Utils {
     val firebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     val firebaseUser: FirebaseUser? = firebaseAuth?.currentUser
     val userUID: String? = firebaseUser?.uid
+
+    init{
+
+    }
 }

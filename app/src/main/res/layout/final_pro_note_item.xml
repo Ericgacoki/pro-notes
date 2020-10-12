@@ -53,8 +53,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -105,7 +105,8 @@
             android:id="@+id/foldedProNoteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="10dp"
             android:ellipsize="end"
             android:scrollHorizontally="true"
             android:textColor="@color/colorMaroon"
@@ -116,8 +117,11 @@
             android:id="@+id/foldedProNoteBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="3dp"
             android:ellipsize="end"
+            android:maxLines="1"
             android:maxLength="30"
             android:scrollHorizontally="true"
             android:textColor="@android:color/black"

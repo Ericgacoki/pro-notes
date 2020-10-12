@@ -34,7 +34,7 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         )
         val p3 = ProNoteData(
             "null", "Demo Kotlin",
-            "\n\n This is a stytically typed programming language used to create android application",
+            "This is a stytically typed programming language used to create android application",
             "Oct 11, 2017", null
         )
         val p4 = ProNoteData(
@@ -54,7 +54,7 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         )
         val p7 = ProNoteData(
             "null", "Kotlin Lang",
-            "statically typed programming language used to create android application \n\n",
+            "statically typed programming language used to create android application",
             "Oct 11, 2020 10:20 AM", null
         )
         val p = ProNoteData(
@@ -64,17 +64,17 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         )
         val p8 = ProNoteData(
             "null", "Demo Kotlin",
-            "\n\n This is a stytically typed programming language used to create android application",
+            "This is a stytically typed programming language used to create android application",
             "Oct 11, 2017", null
         )
         val p9 = ProNoteData(
             "null", "Android Kotlin",
             "This is a statically typed programming language used to create android application",
-            "Jan 15, 2020", null
+            "Jan 15, 2020 ", null
         )
         val p10 = ProNoteData(
-            "null", "Kotlin",
-            "used to create android application",
+            "null", "Eric has made it",
+            "Every new project becomes my favorite. i've liked this one very much. Now am not a noob.",
             "Oct 11, 2020", null
         )
 
