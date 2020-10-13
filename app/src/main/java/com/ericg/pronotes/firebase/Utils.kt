@@ -3,6 +3,7 @@ package com.ericg.pronotes.firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestoreSettings
 
 /**
  * @author eric
@@ -11,11 +12,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 object Utils {
     val userDatabase: FirebaseFirestore? = FirebaseFirestore.getInstance()
-    val firebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
+    private val firebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     val firebaseUser: FirebaseUser? = firebaseAuth?.currentUser
     val userUID: String? = firebaseUser?.uid
 
-    init{
-
+    init {
+        userDatabase?.firestoreSettings = firestoreSettings {
+            isPersistenceEnabled = true
+        }
     }
 }

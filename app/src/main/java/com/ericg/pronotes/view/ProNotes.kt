@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.ericg.pronotes.R
 import com.ericg.pronotes.adapters.ProNotesRecyclerviewAdapter
 import com.ericg.pronotes.model.ProNoteData
+import com.ericg.pronotes.viewmodel.GetDataViewModel
 import com.ramotion.foldingcell.FoldingCell
 import kotlinx.android.synthetic.main.pro_notes_fragment.view.*
 
@@ -78,14 +80,29 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
             "Oct 11, 2020", null
         )
 
-        val proNotesList = listOf(p1, p2, p3, p4, p5, p6, p7, p, p8, p9, p10)
+        //  val proNotesList = listOf(p1, p2, p3, p4, p5, p6, p7, p, p8, p9, p10)
 
-        val adapter = ProNotesRecyclerviewAdapter(this, proNotesList)
+        val proNoteViewModel = ViewModelProvider(
+            this,
+            defaultViewModelProviderFactory
+        ).get(GetDataViewModel::class.java)
+
+        var proNotesList = proNoteViewModel.proNotesList()!!
+
+        var proAdapter = ProNotesRecyclerviewAdapter(this, proNotesList)
+
+        proNoteViewModel.done.observe(viewLifecycleOwner, {
+            if (it) {
+                proNotesList = proNoteViewModel.proNotesList()!!
+                proAdapter = ProNotesRecyclerviewAdapter(this, proNotesList)
+                proAdapter.notifyDataSetChanged()
+            }
+        })
 
         return inflater.inflate(R.layout.pro_notes_fragment, container, false).apply {
             this.proNotesRecyclerview.apply {
-                this.adapter = adapter
-                adapter.notifyDataSetChanged()
+                this.adapter = proAdapter
+                proAdapter.notifyDataSetChanged()
             }
         }
     }

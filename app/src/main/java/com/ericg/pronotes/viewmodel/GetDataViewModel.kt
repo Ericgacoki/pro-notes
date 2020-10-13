@@ -15,14 +15,21 @@ import com.ericg.pronotes.model.TodoData
 class GetDataViewModel : ViewModel() {
     val done: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    var proNotesList: List<ProNoteData>? = listOf()
-    private var proNotesQuerySnapshot = GetData(DataType.PRO_NOTE).getData()?.addOnCompleteListener { get ->
-        done.value = false
+    private var proNotesList: List<ProNoteData>? = listOf()
+    private var proNotesQuerySnapshot = GetData(DataType.PRO_NOTE).getData()
 
-        if (get.isSuccessful) {
-            proNotesList = get.result?.toObjects(ProNoteData::class.java)
-            done.value = true
+    fun proNotesList(): List<ProNoteData>? {
+        proNotesQuerySnapshot?.addOnCompleteListener { get ->
+            done.value = false
+
+            if (get.isSuccessful) {
+                
+                proNotesList = get.result?.toObjects(ProNoteData::class.java)
+                done.value = true
+
+            } else { done.value = true}
         }
+        return proNotesList
     }
 
 

@@ -13,10 +13,10 @@ import com.google.firebase.firestore.QuerySnapshot
 class GetData(private val type: DataType) {
     fun getData(): Task<QuerySnapshot>? {
         return if (type == DataType.PRO_NOTE) {
-            userDatabase?.collection("users/${firebaseUser?.uid}/proNotes")?.orderBy("timeStamp")
+            userDatabase?.collection("users/${firebaseUser?.uid}/proNotes")?.orderBy("title")
                 ?.get()
         } else {
-            userDatabase?.collection("users/${firebaseUser?.uid}/todo")?.orderBy("timeStamp")?.get()
+            userDatabase?.collection("users/${firebaseUser?.uid}/todo")?.orderBy("title")?.get()
         }
     }
 }
