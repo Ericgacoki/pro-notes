@@ -16,7 +16,7 @@ object Utils {
     val firebaseUser: FirebaseUser? = firebaseAuth?.currentUser
     val userUID: String? = firebaseUser?.uid
 
-    init {
+   init{
         userDatabase?.firestoreSettings = firestoreSettings {
             isPersistenceEnabled = true
         }

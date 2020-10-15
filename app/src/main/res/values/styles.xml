@@ -33,4 +33,9 @@
         <item name="fontFamily">casual</item>
     </style>
 
+    <style name="ThemeFab">
+        <item name="colorAccent">@color/colorOrange</item>
+        <item name="backgroundTint">@color/colorOrange</item>
+    </style>
+
 </resources>

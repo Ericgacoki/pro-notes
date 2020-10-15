@@ -13,13 +13,13 @@ import com.ramotion.foldingcell.FoldingCell
 import kotlinx.android.synthetic.main.final_pro_note_item.view.*
 
 /**
- * @author eric
+ * @author eric gacoki
  * @date 10/2/20
  */
 
 class ProNotesRecyclerviewAdapter(
     private val proNoteClickListener: OnProNoteClick,
-    private val proNotesListData: List<ProNoteData>
+    private val proNotesList: List<ProNoteData>
 
 ) : RecyclerView.Adapter<ProNotesRecyclerviewAdapter.ProNoteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProNoteViewHolder {
@@ -29,10 +29,10 @@ class ProNotesRecyclerviewAdapter(
     }
 
     override fun onBindViewHolder(holder: ProNoteViewHolder, position: Int) {
-        holder.bind(proNotesListData[position])
+        holder.bind(proNotesList[position])
     }
 
-    override fun getItemCount(): Int = proNotesListData.size
+    override fun getItemCount(): Int = proNotesList.size
 
     inner class ProNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
