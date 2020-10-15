@@ -1,3 +1,3 @@
 package com.ericg.pronotes.model
 
-enum class DataType {PRO_NOTE, TODO}
+enum class DataType { PRO_NOTE, TODO }
