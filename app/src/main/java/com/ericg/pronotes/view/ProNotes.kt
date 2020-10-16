@@ -1,6 +1,5 @@
 package com.ericg.pronotes.view
 
-import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ericg.pronotes.R
 import com.ericg.pronotes.adapters.ProNotesRecyclerviewAdapter
+import com.ericg.pronotes.extentions.Extensions.toast
 import com.ericg.pronotes.firebase.Utils.userDatabase
 import com.ericg.pronotes.firebase.Utils.userUID
 import com.ericg.pronotes.model.DataType
 import com.ericg.pronotes.model.ProNoteData
 import com.ericg.pronotes.model.SaveData
 import com.ericg.pronotes.viewmodel.GetDataViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FieldValue
 import com.ramotion.foldingcell.FoldingCell
 import kotlinx.android.synthetic.main.pro_notes_fragment.view.*
@@ -41,7 +42,7 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val p1 = ProNoteData(
+     /*   val p1 = ProNoteData(
             "null", "Kotlin",
             "This is a statically typed programming language used to create android application",
             "Oct 11, 2020", null
@@ -95,7 +96,7 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
             "null", "Eric has made it",
             "Every new project becomes my favorite. i've liked this one very much. Now am not a noob.",
             "Oct 11, 2020", null
-        )
+        )*/
 
         //  val proNotesList = listOf(p1, p2, p3, p4, p5, p6, p7, p, p8, p9, p10)
 /*
@@ -114,23 +115,26 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
             }
         })*/
 
-        val proNoteViewModel = ViewModelProvider(this, defaultViewModelProviderFactory).get(
-            GetDataViewModel::class.java
-        )
+        val proNoteViewModel = ViewModelProvider(
+            this, defaultViewModelProviderFactory
+        ).get(GetDataViewModel::class.java)
 
-        val proNotesList = proNoteViewModel.getProNotesList()
-        val proNoteAdapter = ProNotesRecyclerviewAdapter(this, proNotesList)
+        var proNotesList = listOf<ProNoteData>()
+        val proNoteAdapter = ProNotesRecyclerviewAdapter(this@ProNotes, proNotesList)
+
+        proNoteViewModel.done.observe(viewLifecycleOwner, { done ->
+            if (done) {
+                toast("done fetching data")
+                proNotesList = proNoteViewModel.getProNotesList()
+                proNoteAdapter.notifyDataSetChanged()
+            }
+        })
 
         return inflater.inflate(R.layout.pro_notes_fragment, container, false).apply {
             this.proNotesRecyclerview.apply {
-                this.adapter = proNoteAdapter
-
-                proNoteViewModel.done.observe(viewLifecycleOwner, { done ->
-                    if (done) {
-                        proNoteAdapter.notifyDataSetChanged()
-                    }
-                })
+                adapter = proNoteAdapter
             }
+
             this.fabCreateProNote.setOnClickListener {
                 createProNote()
             }
@@ -139,6 +143,7 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createProNote() {
+        val createProNoteDialog = BottomSheetDialog(requireContext())
 
         val proNoteView = LayoutInflater.from(this.requireContext()).inflate(
             R.layout.raw_create_pro_note,
@@ -166,9 +171,12 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
                     GlobalScope.launch(Dispatchers.IO) {
                         SaveData(DataType.PRO_NOTE, docId, proNoteData, null).saveData()
                     }
+                    createProNoteDialog.dismiss()
+                    toast("uploading . . .")
+
                 } else {
                     inputs.forEach {
-                        if (it.text.isEmpty()) {
+                        if (it.text.toString().trim().isEmpty()) {
                             it.error = "${it.hint} is required"
                         }
                     }
@@ -176,9 +184,10 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
             }
         }
 
-        AlertDialog.Builder(requireContext()).apply {
-            setView(proNoteView)
-            create()
+        createProNoteDialog.apply {
+            setContentView(proNoteView)
+            setCancelable(true)
+           // create()
         }.show()
 
     }

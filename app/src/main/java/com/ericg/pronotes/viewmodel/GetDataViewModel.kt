@@ -12,7 +12,7 @@ open class GetDataViewModel : ViewModel() {
     private val proNotesQuerySnapshot = GetDataRepository(DataType.PRO_NOTE).taskQuerySnapshot
     private val todoQuerySnapshot = GetDataRepository(DataType.TODO).taskQuerySnapshot
 
-    private var mutableDone = MutableLiveData(false)
+    private val mutableDone = MutableLiveData(false)
     val done = mutableDone as LiveData<Boolean>
 
     fun getProNotesList(): List<ProNoteData> {

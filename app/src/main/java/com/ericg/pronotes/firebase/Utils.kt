@@ -17,6 +17,9 @@ object Utils {
     val userUID: String? = firebaseUser?.uid
 
    init{
+       userDatabase?.collection("users/$userUID/proNotes")?.add(hashMapOf("proNotes doc" to "is real"))
+       userDatabase?.collection("users/$userUID/todo")?.add(hashMapOf("todo doc" to "is real"))
+
         userDatabase?.firestoreSettings = firestoreSettings {
             isPersistenceEnabled = true
         }

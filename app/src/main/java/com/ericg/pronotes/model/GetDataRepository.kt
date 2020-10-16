@@ -11,11 +11,11 @@ import com.ericg.pronotes.firebase.Utils.userUID
 open class GetDataRepository(type: DataType) {
    val taskQuerySnapshot = if (type == DataType.PRO_NOTE){
        userDatabase?.collection("users/$userUID/proNotes")
-           ?.orderBy("title")
+           ?.orderBy("timeStamp")
            ?.get()
    } else {
        userDatabase?.collection("users/$userUID/todo")
-           ?.orderBy("title")
+           ?.orderBy("timeStamp")
            ?.get()
    }
 }
