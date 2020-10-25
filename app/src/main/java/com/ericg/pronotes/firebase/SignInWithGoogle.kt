@@ -40,18 +40,6 @@ class SignInWithGoogle : AppCompatActivity() {
             signIn()
         }
         initValues()
-
-        /*todo  change auto sign in to false before I remove this */
-        anonymous.setOnClickListener {
-            GlobalScope.launch {
-                PrefsDataStoreBooleans(this@SignInWithGoogle).setPrefsBoolean(
-                    PrefsBooleanType.AUTO_SIGN_IN,
-                    true
-                )
-            }
-            startActivity(Intent(this, ParentActivity::class.java))
-            finish()
-        }
     }
 
     private fun initValues() {
@@ -76,7 +64,7 @@ class SignInWithGoogle : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: Exception) {
-                toast("Failed")
+                toast("Failed with exception \n$e")
             }
         }
     }
@@ -101,7 +89,6 @@ class SignInWithGoogle : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // GoogleSignIn.getClient(this, gso).silentSignIn()
 
         if (firebaseUser != null) {
             /*refresh app */

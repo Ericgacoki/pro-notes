@@ -1,6 +1,5 @@
 package com.ericg.pronotes.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ericg.pronotes.model.DataType
@@ -12,8 +11,9 @@ open class GetDataViewModel : ViewModel() {
     private val proNotesQuerySnapshot = GetDataRepository(DataType.PRO_NOTE).taskQuerySnapshot
     private val todoQuerySnapshot = GetDataRepository(DataType.TODO).taskQuerySnapshot
 
-    private val mutableDone = MutableLiveData(false)
-    val done = mutableDone as LiveData<Boolean>
+    val mutableDone = MutableLiveData(false)
+
+    // val done = mutableDone
 
     fun getProNotesList(): List<ProNoteData> {
         var proNotesList = listOf<ProNoteData>()
@@ -25,10 +25,12 @@ open class GetDataViewModel : ViewModel() {
                 mutableDone.value = true
                 proNotesList = it.result!!.toObjects(ProNoteData::class.java)
             } else {
-                /*done but unsuccessful*/
+                /*done but not successful*/
                 mutableDone.value = true
+                proNotesList = listOf()
             }
         }
+
         return proNotesList
     }
 

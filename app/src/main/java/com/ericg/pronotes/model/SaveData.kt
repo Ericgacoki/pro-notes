@@ -15,6 +15,8 @@ class SaveData(
     private val todoData: TodoData?
 ) {
     fun saveData() {
+        userDatabase?.document("users/$userUID")?.set(hashMapOf("userUID doc" to "exists"))
+
         if (type == DataType.PRO_NOTE) {
             userDatabase?.document("users/$userUID/proNotes/$docID")?.set(proNoteData!!)
         } else {

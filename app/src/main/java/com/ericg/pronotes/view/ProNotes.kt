@@ -42,63 +42,63 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-     /*   val p1 = ProNoteData(
-            "null", "Kotlin",
-            "This is a statically typed programming language used to create android application",
-            "Oct 11, 2020", null
-        )
-        val p2 = ProNoteData(
-            "null", "Kotlin Lang",
-            "statically typed programming language used to create android application \n\n",
-            "Oct 11, 2020", null
-        )
-        val p3 = ProNoteData(
-            "null", "Demo Kotlin",
-            "This is a stytically typed programming language used to create android application",
-            "Oct 11, 2017", null
-        )
-        val p4 = ProNoteData(
-            "null", "Android Kotlin",
-            "This is a statically typed programming language used to create android application",
-            "Jan 15, 2020", null
-        )
-        val p5 = ProNoteData(
-            "null", "Kotlin",
-            "used to create android application",
-            "Oct 11, 2020", null
-        )
-        val p6 = ProNoteData(
-            "null", "Kotlin",
-            "This is a statically typed programming language used to create android application",
-            "Oct 11, 2020", null
-        )
-        val p7 = ProNoteData(
-            "null", "Kotlin Lang",
-            "statically typed programming language used to create android application",
-            "Oct 11, 2020 10:20 AM", null
-        )
-        val p = ProNoteData(
-            "null", "Kotlin Lang",
-            "",
-            "Oct 11, 2020 10:20 AM", null
-        )
-        val p8 = ProNoteData(
-            "null", "Demo Kotlin",
-            "This is a stytically typed programming language used to create android application",
-            "Oct 11, 2017", null
-        )
-        val p9 = ProNoteData(
-            "null", "Android Kotlin",
-            "This is a statically typed programming language used to create android application",
-            "Jan 15, 2020 ", null
-        )
-        val p10 = ProNoteData(
-            "null", "Eric has made it",
-            "Every new project becomes my favorite. i've liked this one very much. Now am not a noob.",
-            "Oct 11, 2020", null
-        )*/
+        /*      val p1 = ProNoteData(
+                  "null", "Kotlin",
+                  "This is a statically typed programming language used to create android application",
+                  "Oct 11, 2020", null
+              )
+              val p2 = ProNoteData(
+                  "null", "Kotlin Lang",
+                  "statically typed programming language used to create android application \n\n",
+                  "Oct 11, 2020", null
+              )
+              val p3 = ProNoteData(
+                  "null", "Demo Kotlin",
+                  "This is a stytically typed programming language used to create android application",
+                  "Oct 11, 2017", null
+              )
+              val p4 = ProNoteData(
+                  "null", "Android Kotlin",
+                  "This is a statically typed programming language used to create android application",
+                  "Jan 15, 2020", null
+              )
+              val p5 = ProNoteData(
+                  "null", "Kotlin",
+                  "used to create android application",
+                  "Oct 11, 2020", null
+              )
+              val p6 = ProNoteData(
+                  "null", "Kotlin",
+                  "This is a statically typed programming language used to create android application",
+                  "Oct 11, 2020", null
+              )
+              val p7 = ProNoteData(
+                  "null", "Kotlin Lang",
+                  "statically typed programming language used to create android application",
+                  "Oct 11, 2020 10:20 AM", null
+              )
+              val p = ProNoteData(
+                  "null", "Kotlin Lang",
+                  "",
+                  "Oct 11, 2020 10:20 AM", null
+              )
+              val p8 = ProNoteData(
+                  "null", "Demo Kotlin",
+                  "This is a stytically typed programming language used to create android application",
+                  "Oct 11, 2017", null
+              )
+              val p9 = ProNoteData(
+                  "null", "Android Kotlin",
+                  "This is a statically typed programming language used to create android application",
+                  "Jan 15, 2020 ", null
+              )
+              val p10 = ProNoteData(
+                  "null", "Eric has made it",
+                  "Every new project becomes my favorite. i've liked this one very much. Now am not a noob.",
+                  "Oct 11, 2020", null
+              )*/
 
-        //  val proNotesList = listOf(p1, p2, p3, p4, p5, p6, p7, p, p8, p9, p10)
+        //  val proNotesList1 = listOf(p1, p2, p3, p4, p5, p6, p7, p, p8, p9, p10)
 /*
         val proNoteViewModel = ViewModelProvider(
             this, defaultViewModelProviderFactory
@@ -116,16 +116,15 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         })*/
 
         val proNoteViewModel = ViewModelProvider(
-            this, defaultViewModelProviderFactory
+            this
         ).get(GetDataViewModel::class.java)
 
-        var proNotesList = listOf<ProNoteData>()
-        val proNoteAdapter = ProNotesRecyclerviewAdapter(this@ProNotes, proNotesList)
+        val proNoteAdapter = ProNotesRecyclerviewAdapter(this@ProNotes, listOf<ProNoteData>())
 
-        proNoteViewModel.done.observe(viewLifecycleOwner, { done ->
+        proNoteViewModel.mutableDone.observe(viewLifecycleOwner, { done ->
             if (done) {
-                toast("done fetching data")
-                proNotesList = proNoteViewModel.getProNotesList()
+                toast("done loading from ${Thread.currentThread().name}")
+                proNoteAdapter.proNotesList = proNoteViewModel.getProNotesList()
                 proNoteAdapter.notifyDataSetChanged()
             }
         })
@@ -187,7 +186,7 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         createProNoteDialog.apply {
             setContentView(proNoteView)
             setCancelable(true)
-           // create()
+            // create()
         }.show()
 
     }

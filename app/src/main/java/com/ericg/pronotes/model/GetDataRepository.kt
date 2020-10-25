@@ -2,6 +2,7 @@ package com.ericg.pronotes.model
 
 import com.ericg.pronotes.firebase.Utils.userDatabase
 import com.ericg.pronotes.firebase.Utils.userUID
+import com.google.firebase.firestore.Query
 
 /**
  * @author eric
@@ -11,11 +12,11 @@ import com.ericg.pronotes.firebase.Utils.userUID
 open class GetDataRepository(type: DataType) {
    val taskQuerySnapshot = if (type == DataType.PRO_NOTE){
        userDatabase?.collection("users/$userUID/proNotes")
-           ?.orderBy("timeStamp")
+           ?.orderBy("timeStamp", Query.Direction.DESCENDING)
            ?.get()
    } else {
        userDatabase?.collection("users/$userUID/todo")
-           ?.orderBy("timeStamp")
+           ?.orderBy("timeStamp", Query.Direction.DESCENDING)
            ?.get()
    }
 }

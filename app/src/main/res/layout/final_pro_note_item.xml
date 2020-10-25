@@ -8,7 +8,7 @@
     android:layout_margin="10dp"
     android:clipChildren="false"
     android:clipToPadding="false"
-    app:animationDuration="1000"
+    app:animationDuration="500"
     app:backSideColor="@color/colorSemiTransparent"
     app:cameraHeight="30">
 
@@ -120,12 +120,11 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="7dp"
             android:layout_marginTop="3dp"
-            android:ellipsize="end"
             android:maxLines="1"
-            android:maxLength="30"
+            android:ellipsize="end"
             android:scrollHorizontally="true"
             android:textColor="@android:color/black"
-            tools:text="Android monday is a programme..." />
+            tools:text="Android monday is a programme that is run by the one and only code magician" />
     </LinearLayout>
 
 
