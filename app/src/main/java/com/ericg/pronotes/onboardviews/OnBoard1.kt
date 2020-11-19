@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.onboard1_fragment.view.*
  * @author eric
  * @date 10/2/20
  */
+
 class OnBoard1 : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,

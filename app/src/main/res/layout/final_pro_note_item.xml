@@ -12,14 +12,14 @@
     app:backSideColor="@color/colorSemiTransparent"
     app:cameraHeight="30">
 
-    <!--folded or unfolded are ui states -->
+    <!--unfolded ui states -->
 
     <LinearLayout
         android:id="@+id/unfoldedProNoteState"
-        android:elevation="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/pro_note_bg"
+        android:elevation="0dp"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -38,7 +38,7 @@
                 android:singleLine="true"
                 android:textColor="@color/colorMaroon"
                 android:textStyle="bold"
-                tools:text="Android Monday" />
+                tools:text="Android Note app" />
 
             <TextView
                 android:id="@+id/unfoldedProNoteBody"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textColor="@android:color/black"
-                tools:text="Android monday is a programme run by eric that helps developers to come together and solve real world problems." />
+                tools:text="Exploring tech is one of my hobbies. Android lays no exception in that I always keep learning and implementing ..." />
 
         </LinearLayout>
 
@@ -63,10 +63,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:textAlignment="gravity"
                 android:drawablePadding="5dp"
                 android:fadingEdge="horizontal"
                 android:gravity="start|center"
+                android:textAlignment="gravity"
                 app:drawableStartCompat="@drawable/ic_date_time"
                 tools:text="Sat Jan 1 2020" />
 
@@ -94,6 +94,8 @@
 
     </LinearLayout>
 
+    <!-- folded state-->
+
     <LinearLayout
         android:id="@+id/foldedProNoteState"
         android:layout_width="match_parent"
@@ -105,8 +107,8 @@
             android:id="@+id/foldedProNoteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:scrollHorizontally="true"
             android:textColor="@color/colorMaroon"
@@ -118,14 +120,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="7dp"
             android:layout_marginTop="3dp"
-            android:maxLines="1"
+            android:layout_marginBottom="7dp"
             android:ellipsize="end"
+            android:maxLines="1"
             android:scrollHorizontally="true"
             android:textColor="@android:color/black"
             tools:text="Android monday is a programme that is run by the one and only code magician" />
     </LinearLayout>
-
-
 </com.ramotion.foldingcell.FoldingCell>

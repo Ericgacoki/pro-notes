@@ -42,84 +42,21 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        /*      val p1 = ProNoteData(
-                  "null", "Kotlin",
-                  "This is a statically typed programming language used to create android application",
-                  "Oct 11, 2020", null
-              )
-              val p2 = ProNoteData(
-                  "null", "Kotlin Lang",
-                  "statically typed programming language used to create android application \n\n",
-                  "Oct 11, 2020", null
-              )
-              val p3 = ProNoteData(
-                  "null", "Demo Kotlin",
-                  "This is a stytically typed programming language used to create android application",
-                  "Oct 11, 2017", null
-              )
-              val p4 = ProNoteData(
-                  "null", "Android Kotlin",
-                  "This is a statically typed programming language used to create android application",
-                  "Jan 15, 2020", null
-              )
-              val p5 = ProNoteData(
-                  "null", "Kotlin",
-                  "used to create android application",
-                  "Oct 11, 2020", null
-              )
-              val p6 = ProNoteData(
-                  "null", "Kotlin",
-                  "This is a statically typed programming language used to create android application",
-                  "Oct 11, 2020", null
-              )
-              val p7 = ProNoteData(
-                  "null", "Kotlin Lang",
-                  "statically typed programming language used to create android application",
-                  "Oct 11, 2020 10:20 AM", null
-              )
-              val p = ProNoteData(
-                  "null", "Kotlin Lang",
-                  "",
-                  "Oct 11, 2020 10:20 AM", null
-              )
-              val p8 = ProNoteData(
-                  "null", "Demo Kotlin",
-                  "This is a stytically typed programming language used to create android application",
-                  "Oct 11, 2017", null
-              )
-              val p9 = ProNoteData(
-                  "null", "Android Kotlin",
-                  "This is a statically typed programming language used to create android application",
-                  "Jan 15, 2020 ", null
-              )
-              val p10 = ProNoteData(
-                  "null", "Eric has made it",
-                  "Every new project becomes my favorite. i've liked this one very much. Now am not a noob.",
-                  "Oct 11, 2020", null
-              )*/
-
-        //  val proNotesList1 = listOf(p1, p2, p3, p4, p5, p6, p7, p, p8, p9, p10)
-/*
-        val proNoteViewModel = ViewModelProvider(
-            this, defaultViewModelProviderFactory
-        ).get(GetDataViewModel::class.java)
-
-        var proNotesList = listOf<ProNoteData>()
-        val proAdapter = ProNotesRecyclerviewAdapter(this, proNotesList)
-
-        proNoteViewModel.done.observe(viewLifecycleOwner, { done ->
-            if (done) {
-                proNotesList = proNoteViewModel.proNotesList()!!
-                // proAdapter = ProNotesRecyclerviewAdapter(this, proNotesList)
-                proAdapter.notifyDataSetChanged()
-            }
-        })*/
 
         val proNoteViewModel = ViewModelProvider(
-            this
+            this@ProNotes
         ).get(GetDataViewModel::class.java)
 
         val proNoteAdapter = ProNotesRecyclerviewAdapter(this@ProNotes, listOf<ProNoteData>())
+
+        userDatabase?.collection("users/$userUID/proNotes")?.get()?.addOnSuccessListener {
+            val notesList = it.toObjects(ProNoteData::class.java)
+            proNoteAdapter.apply {
+                proNotesList = notesList
+                notifyDataSetChanged()
+            }
+        }
+        // todo check this out and add no data image visibility
 
         proNoteViewModel.mutableDone.observe(viewLifecycleOwner, { done ->
             if (done) {
@@ -172,6 +109,8 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
                     }
                     createProNoteDialog.dismiss()
                     toast("uploading . . .")
+
+                    // todo refresh data in the viewModel to reflect to the recyclerview
 
                 } else {
                     inputs.forEach {

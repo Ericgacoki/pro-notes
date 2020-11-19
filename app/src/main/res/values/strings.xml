@@ -18,4 +18,6 @@
     <string name="OAuth_AndroidType_client_ID">447967702556-5rrdu0qe4o4215s67nce0jupnc7p1oi2.apps.googleusercontent.com</string>
     <string name="please_sign_in_to_proceed">Please sign in to proceed</string>
     <string name="welcome_to_pro_notes">Welcome to Pro Notes</string>
+    <string name="fab">fab</string>
+    <string name="no_data">No notes yet. Click the add button below</string>
 </resources>

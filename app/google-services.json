@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "447967702556-1jjsro9hpu1clncj1d88fqusc7nko01m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ericg.pronotes",
+            "certificate_hash": "99c7875e68e5fd0cfce5d4165c7e25c527b311ea"
+          }
+        },
+        {
           "client_id": "447967702556-2d4r17ri23pavuat0monv92feqir9do5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

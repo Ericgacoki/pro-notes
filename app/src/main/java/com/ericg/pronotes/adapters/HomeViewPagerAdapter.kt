@@ -10,7 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @date 10/2/20
  */
 
-class HomeViewPagerAdapter (
+class HomeViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val fragmentsList: List<Fragment>
