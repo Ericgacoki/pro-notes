@@ -38,8 +38,7 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeToRefreshProNotes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/proNotesRecyclerview"
@@ -51,6 +50,16 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/final_pro_note_item" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.ldoublem.loadingviewlib.view.LVCircularSmile
+            android:id="@+id/loadingProNotesView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabCreateProNote"
@@ -67,5 +76,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1"
             app:maxImageSize="30dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

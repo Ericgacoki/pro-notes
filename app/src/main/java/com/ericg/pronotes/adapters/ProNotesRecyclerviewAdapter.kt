@@ -18,7 +18,6 @@ import com.ramotion.foldingcell.FoldingCell
 class ProNotesRecyclerviewAdapter(
     private val proNoteClickListener: OnProNoteClick,
     var proNotesList: List<ProNoteData>
-
 ) : RecyclerView.Adapter<ProNotesRecyclerviewAdapter.ProNoteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProNoteViewHolder {
         return ProNoteViewHolder(
@@ -26,9 +25,8 @@ class ProNotesRecyclerviewAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: ProNoteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProNoteViewHolder, position: Int) =
         holder.bind(proNotesList[position])
-    }
 
     override fun getItemCount(): Int = proNotesList.size
 
@@ -40,7 +38,6 @@ class ProNotesRecyclerviewAdapter(
 
         private var foldedTitle: TextView? = itemView.findViewById(R.id.foldedProNoteTitle)
         private var foldedBody: TextView? = itemView.findViewById(R.id.foldedProNoteBody)
-
 
         private var unfoldedTitle: TextView? = itemView.findViewById(R.id.unfoldedProNoteTitle)
         private var unfoldedBody: TextView? = itemView.findViewById(R.id.unfoldedProNoteBody)
