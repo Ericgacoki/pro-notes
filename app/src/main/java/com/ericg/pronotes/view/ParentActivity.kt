@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.pronotes.R
 import com.ericg.pronotes.extentions.Extensions.toast
+import kotlinx.android.synthetic.main.home_view_pager2.*
 
 class ParentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +17,8 @@ class ParentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_parent)
         // supportActionBar?.hide()
         // NavigationUI.setupActionBarWithNavController(this, findNavController(R.id.main_host_fragment))
+
+        supportActionBar?.title = if (homeViewPager2?.currentItem == 0) "Notes" else "Todo"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -31,7 +34,6 @@ class ParentActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     var canGoBack = false
 
