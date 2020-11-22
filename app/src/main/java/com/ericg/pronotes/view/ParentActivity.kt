@@ -3,9 +3,12 @@ package com.ericg.pronotes.view
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.pronotes.R
+import com.ericg.pronotes.extentions.Extensions.toast
 
 class ParentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,6 +17,21 @@ class ParentActivity : AppCompatActivity() {
         // supportActionBar?.hide()
         // NavigationUI.setupActionBarWithNavController(this, findNavController(R.id.main_host_fragment))
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings -> {
+                toast("settings coming soon")
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     var canGoBack = false
 
