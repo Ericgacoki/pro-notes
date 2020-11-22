@@ -1,5 +1,6 @@
 package com.ericg.pronotes.view
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +25,6 @@ import com.ericg.pronotes.model.SaveData
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FieldValue
 import com.ramotion.foldingcell.FoldingCell
-import kotlinx.android.synthetic.main.pro_notes_fragment.*
 import kotlinx.android.synthetic.main.pro_notes_fragment.view.*
 import kotlinx.android.synthetic.main.raw_create_pro_note.view.*
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +42,8 @@ import java.time.format.FormatStyle
 
 class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
     lateinit var proNoteAdapter: ProNotesRecyclerviewAdapter
+    private var fetchedProNotes: List<ProNoteData> = listOf()
+    lateinit var fragmentView: View
     private var previousTitle: String? = ""
     private var previousBody: String? = ""
 
@@ -51,18 +53,12 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        /* userDatabase?.collection("users/$userUID/proNotes")?.get()?.addOnSuccessListener {
-            val notesList = it.toObjects(ProNoteData::class.java)
-            proNoteAdapter.apply {
-                proNotesList = notesList
-                notifyDataSetChanged()
-            }
-        } */
-        //getProNotes(true)
 
-        return inflater.inflate(R.layout.pro_notes_fragment, container, false).apply {
-            getProNotes(true)
+        fragmentView = inflater.inflate(R.layout.pro_notes_fragment, container, false)
+        return fragmentView.apply {
 
+            loadingView(true)
+            getProNotes()
             this.proNotesRecyclerview.apply {
                 adapter = proNoteAdapter
             }
@@ -71,36 +67,38 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
             }
 
             this.swipeToRefreshProNotes.setOnRefreshListener {
-                getProNotes(false).observe(viewLifecycleOwner, { complete ->
+                getProNotes().observe(viewLifecycleOwner, { complete ->
                     if (complete) {
+                        this.proNotesRecyclerview.adapter?.notifyDataSetChanged()
                         swipeToRefreshProNotes.isRefreshing = false
                     }
                 })
             }
         }
     }
-    /* use the repository directly since viewModel doesn't seem to work well with viewpager2 */
 
-    private fun getProNotes(showLoadingView: Boolean): MutableLiveData<Boolean> {
+/* use the repository directly since viewModel doesn't seem to work well with viewpager2 */
+
+    private fun getProNotes(): MutableLiveData<Boolean> {
         val completedGetting: MutableLiveData<Boolean> = MutableLiveData(false)
 
-        loadingView(showLoadingView)
         proNoteAdapter = ProNotesRecyclerviewAdapter(this@ProNotes, listOf<ProNoteData>())
-        var fetchedProNotes: List<ProNoteData>
 
-        GetDataRepository(DataType.PRO_NOTE).taskQuerySnapshot?.addOnCompleteListener {
+        GetDataRepository(DataType.PRO_NOTE).taskQuerySnapshot?.addOnCompleteListener { it ->
             completedGetting.value = true
 
-            loadingView(false)
             toast("completed fetching pronotes")
+            loadingView(false)
 
             fetchedProNotes = it.result!!.toObjects(ProNoteData::class.java)
-            proNoteAdapter.apply {
-                proNotesList = fetchedProNotes
-                notifyDataSetChanged()
+
+            fragmentView.proNotesRecyclerview.adapter = proNoteAdapter.also { adapter ->
+                adapter.proNotesList = fetchedProNotes
+                adapter.notifyDataSetChanged()
             }
 
-            noDataLay.visibility = if (fetchedProNotes.isEmpty()) VISIBLE else INVISIBLE
+            fragmentView.noDataLay.visibility =
+                if (fetchedProNotes.isEmpty()) VISIBLE else INVISIBLE
         }
 
         return completedGetting
@@ -144,11 +142,18 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
 
                     toast("uploading . . .")
                     saveNewProNote.isEnabled = false
-// todo clear previous inputs and update the UI after saving a new note
+
+                    previousTitle = ""
+                    previousBody = ""
+
                     savingJob.observe(viewLifecycleOwner, { job ->
                         if (job.isCompleted) {
-                            // swipeToRefreshProNotes.isRefreshing = true
-                            getProNotes(false)
+                            loadingView(true)
+                            getProNotes().observe(viewLifecycleOwner, { got ->
+                                if (got) {
+                                    fragmentView.proNotesRecyclerview.adapter?.notifyDataSetChanged()
+                                }
+                            })
                             createProNoteDialog.dismiss()
                         }
                     })
@@ -178,24 +183,94 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
 
     private fun loadingView(show: Boolean) {
         if (show) {
-            loadingProNotesView.apply {
-                this?.visibility = VISIBLE
-                this?.setViewColor(R.color.colorOrange)
-                this?.startAnim()
+            fragmentView.loadingProNotesView.apply {
+                visibility = VISIBLE
+                setViewColor(R.color.colorOrange)
+                startAnim()
             }
-
         } else {
-            loadingProNotesView.apply {
-                this?.stopAnim()
-                this?.visibility = INVISIBLE
+            fragmentView.loadingProNotesView.apply {
+                stopAnim()
+                visibility = INVISIBLE
             }
         }
     }
 
-    override fun proNoteClick(foldingCell: FoldingCell?, id: Int?, position: Int) {
+    override fun proNoteClick(
+        foldingCell: FoldingCell?,
+        btnEdit: View?,
+        btnDel: View?,
+        id: Int?,
+        position: Int
+    ) {
         when (id) {
             R.id.proNoteFoldingCell -> {
                 foldingCell?.toggle(false)
+            }
+
+            R.id.deleteProNote -> {
+                AlertDialog.Builder(requireContext(), 3).apply {
+                    setTitle("Sure to delete")
+                    setPositiveButton("Yes") { _, _ ->
+                        loadingView(true)
+
+                        btnEdit?.isEnabled = false
+                        btnDel?.isEnabled = false
+
+                        userDatabase?.document("users/$userUID/proNotes/${fetchedProNotes[position].docId}")
+                            ?.delete()
+                            ?.addOnCompleteListener {
+                                toast("deleted successfully !")
+                                getProNotes()
+                            }
+                    }
+                    setNegativeButton("No") { _, _ ->
+                        /* cancel the dialog */
+                    }
+                }.create().show()
+            }
+            R.id.editProNote -> {
+                val currentTitle = fetchedProNotes[position].title
+                val currentBody = fetchedProNotes[position].body
+                val docId = fetchedProNotes[position].docId
+
+                var newTitle: String
+                var newBody: String
+
+                val bottomSheetLay = layoutInflater.inflate(R.layout.raw_create_pro_note, null)
+                BottomSheetDialog(requireContext()).apply {
+                    setContentView(bottomSheetLay)
+                    bottomSheetLay.apply {
+                        this.newProNoteTitle.setText(currentTitle)
+                        this.newProNoteBody.setText(currentBody)
+
+                        this.saveNewProNote.setOnClickListener {
+                            newTitle = bottomSheetLay.newProNoteTitle.text.toString().trim()
+                            newBody = bottomSheetLay.newProNoteBody.text.toString().trim()
+
+                            if (newTitle.isNotEmpty() && newBody.isNotEmpty()) {
+
+                                loadingView(true)
+                                userDatabase?.document("users/$userUID/proNotes/$docId")?.update(
+                                    hashMapOf(
+                                        "title" to newTitle,
+                                        "body" to newBody
+                                    ) as Map<String, Any>
+                                )?.addOnCompleteListener {
+                                    dismiss()
+                                    getProNotes()
+                                }
+
+                            } else if (newTitle.isEmpty()) {
+                                bottomSheetLay.newProNoteTitle.error =
+                                    bottomSheetLay.newProNoteTitle.hint.toString() + " is required"
+                            } else {
+                                bottomSheetLay.newProNoteBody.error =
+                                    bottomSheetLay.newProNoteBody.hint.toString() + " is required"
+                            }
+                        }
+                    }
+                }.show()
             }
         }
     }

@@ -25,6 +25,14 @@ class HomeViewPager: Fragment() {
 
         return inflater.inflate(R.layout.home_view_pager2, container, false).also {
            it.homeViewPager2.adapter = adapter
+/*
+            if (it.homeViewPager2.currentItem == 0){
+                toast("pro notes")
+                requireActivity().actionBar?.title = "Pro Notes"
+            } else {
+                toast("todo")
+                requireActivity().actionBar?.title = "Todo"
+            }*/
         }
     }
 }

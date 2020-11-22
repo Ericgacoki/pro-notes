@@ -66,12 +66,22 @@ class ProNotesRecyclerviewAdapter(
 
         override fun onClick(view: View?) {
             return proNoteClickListener.proNoteClick(
-                foldingCell, view?.id, adapterPosition
+                foldingCell,
+                edit,
+                delete,
+                view?.id,
+                adapterPosition
             )
         }
     }
 
     interface OnProNoteClick {
-        fun proNoteClick(foldingCell: FoldingCell?, id: Int?, position: Int)
+        fun proNoteClick(
+            foldingCell: FoldingCell?,
+            btnEdit: View?,
+            btnDel: View?,
+            id: Int?,
+            position: Int
+        )
     }
 }
