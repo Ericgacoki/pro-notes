@@ -44,7 +44,7 @@ class ParentActivity : AppCompatActivity() {
         } else {
             canGoBack = true
             Toast.makeText(this, "press again to exit", Toast.LENGTH_SHORT).apply {
-                setGravity(Gravity.CENTER,0,0)
+                setGravity(Gravity.CENTER, 0, 0)
             }.show()
             Handler().postDelayed({ canGoBack = false }, 2000)
         }
