@@ -87,10 +87,15 @@ class ProNotes : Fragment(), ProNotesRecyclerviewAdapter.OnProNoteClick {
         GetDataRepository(DataType.PRO_NOTE).taskQuerySnapshot?.addOnCompleteListener { it ->
             completedGetting.value = true
 
-            toast("completed fetching pronotes")
             loadingView(false)
-
             fetchedProNotes = it.result!!.toObjects(ProNoteData::class.java)
+            (when (fetchedProNotes.size) {
+                0 -> "no notes found"
+                1 -> "found one note"
+                else -> "found ${fetchedProNotes.size} notes"
+            }).also { sizeMessage ->
+                toast(sizeMessage)
+            }
 
             fragmentView.proNotesRecyclerview.adapter = proNoteAdapter.also { adapter ->
                 adapter.proNotesList = fetchedProNotes

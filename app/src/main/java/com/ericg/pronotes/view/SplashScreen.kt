@@ -52,7 +52,7 @@ class SplashScreen : Fragment() {
         val slogan: String = when (randomIndex) {
             0 -> "Take advantage of cloud storage"
             1 -> "It has never been this great before"
-            else -> "Write in one, read in many"
+            else -> "Write in one, sync in all"
         }
 
         fun goto() {

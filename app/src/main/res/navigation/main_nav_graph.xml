@@ -54,12 +54,25 @@
         android:id="@+id/signInUser"
         android:name="com.ericg.pronotes.firebase.SignInWithGoogle"
         android:label="Sign In"
-        tools:layout="@layout/activity_sign_in">
-    </activity>
+        tools:layout="@layout/activity_sign_in"></activity>
 
     <fragment
         android:id="@+id/homeViewPager"
         android:name="com.ericg.pronotes.view.HomeViewPager"
         android:label="Home"
-        tools:layout="@layout/home_view_pager2"/>
+        tools:layout="@layout/home_view_pager2">
+        <action
+            android:id="@+id/from_homeViewPager_to_settings"
+            app:destination="@id/fragmentSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSettings"
+        android:name="com.ericg.pronotes.view.Settings"
+        android:label="Settings"
+        tools:layout="@layout/settings">
+        <action
+            android:id="@+id/from_settings_to_homeViewPager"
+            app:destination="@id/homeViewPager"
+            app:popUpTo="@id/fragmentSettings" />
+    </fragment>
 </navigation>
